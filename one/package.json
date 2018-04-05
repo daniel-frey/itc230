@@ -1,0 +1,22 @@
+{
+  "name": "one",
+  "version": "1.0.0",
+  "description": "package for week 1 ITC 230",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fncreative/itc230.git"
+  },
+  "author": "Daniel Frey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/melmai/itc230/issues"
+  },
+  "homepage": "https://github.com/melmai/itc230#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
