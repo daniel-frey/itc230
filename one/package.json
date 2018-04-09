@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fncreative/itc230.git"
+    "url": "https://github.com/fncreative/itc230.git"
   },
   "author": "Daniel Frey",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/melmai/itc230/issues"
+    "url": "https://github.com/fncreative/itc230/issues"
   },
-  "homepage": "https://github.com/melmai/itc230#readme",
+  "homepage": "https://github.com/fncreative/itc230#readme",
   "dependencies": {
     "express": "^4.16.3"
   }
