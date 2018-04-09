@@ -11,7 +11,7 @@
     "url": "git+https://github.com/fncreative/itc230.git"
   },
   "author": "Daniel Frey",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/melmai/itc230/issues"
   },
