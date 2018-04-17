@@ -11,33 +11,31 @@ let records = [
     {name : "Away from the World", year : 2009, label : "RCA"},
     ];
     
-    //console.log(records);
+export function get(name) {
+    return records.find((item) => {
+        return item.name == name;
+    });
+}
     
+    const _delete = (name) => {
+    var recordLen = records.length;
+    records = records.filter((item) => {
+        return item.name !== name;
+    });
+    var deleted = (records.length == recordLen) ? "" : "deleted";
+    return { "RecordAction": deleted, "Total": records.length };
+};
+export { _delete as delete };
     
-    exports.get = (name) => {
-        return records.find((item) => {
-            return item.name == name;
-        });
-    };
+export function add(newRecord) {
+    var recordName = newRecord.name;
+    var recordYear = newRecord.year;
+    var recordLabel = newRecord.label;
+    var completeRecord = { name: recordName, year: recordYear, label: recordLabel };
+    records.push(completeRecord);
+}
     
-    exports.delete = (name) => {
-        var recordLen = records.length;
-        records = records.filter((item) => {
-            return item.name !== name;
-        });
-        var deleted = (records.length == recordLen) ? "" : "deleted";
-        return { "RecordAction": deleted, "Total": records.length};
-    };
-    
-    exports.add = (newRecord) => {
-        var recordName = newRecord.name;
-        var recordYear = newRecord.year;
-        var recordLabel = newRecord.label;
-        var completeRecord = {name : recordName, year : recordYear, label : recordLabel};
-        records.push(completeRecord);
-    };
-    
-    exports.allRecords = () => {
-        return records;
-    };
+export function allRecords() {
+    return records;
+}
     

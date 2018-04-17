@@ -1,21 +1,22 @@
 "use strict";
 
-var http = require("http"), fs = require('fs'), qs = require("querystring"), records = require("./lib/records");
+import { createServer } from "http";
+import { readFile } from "fs";
+import { parse } from "querystring";
+import { get, add, _delete, allRecords } from "./lib/records";
 
-
-
-http.createServer(function(req,res){
+createServer(function(req,res){
   console.log("url = " + req.url);
   
   var url = req.url.split("?");
-  var params = qs.parse(url[1]);
+  var params = parse(url[1]);
   console.log(params);
   console.log(typeof params);
-  let found = records.get(params.name);
+  let found = get(params.name);
   var path = url[0].toLowerCase();
   switch(path) {
     case '/': 
-      fs.readFile(__dirname + '/home.html', function(err, data){
+      readFile(__dirname + '/home.html', function(err, data){
             if (err) {
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end('500 - internal error');
@@ -34,18 +35,18 @@ http.createServer(function(req,res){
       res.end('Record Results: ' + params.name + "\n" + JSON.stringify(found));
       break;
     case '/add':
-      records.add(params);
+      add(params);
       res.writeHead(200, {'Content-Type': 'text/plain'});
       res.end('Record Added' + '\n' + 'Title: ' + params.name + '\n' + 'Year: ' + params.year + '\n' + 'Label: ' + params.label);
       break;
     case '/delete':
-      var deleted = records.delete(params.name);
+      var deleted = delete(params.name);
       res.end('Record Deleted' + '\n' + 'Title: ' + params.name + '\n' + 'Total Records Remaining:' +  deleted.Total);
       res.writeHead(200, {'Content-Type': 'text/plain'});
       break;
     case '/all':
       res.writeHead(200, {'Content-Type': 'text/plain'});
-      res.end(JSON.stringify(records.allRecords()));
+      res.end(JSON.stringify(allRecords()));
     default:
       res.writeHead(404, {'Content-Type': 'text/plain'});
       res.end('404:Page not found.');
