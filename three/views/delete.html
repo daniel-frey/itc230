@@ -1,0 +1,11 @@
+<html>
+    <body>
+        <a href ="/">Home</a>
+        {{#if result.RecordAction}}
+        <h2>{{name}} Record Deleted</h2>
+        total: {{result.Total}}
+        {{else}}
+        <h2>{{name}} record not found</h2>
+        {{/if}}
+    </body>
+</html>
