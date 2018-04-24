@@ -11,22 +11,20 @@ let records = [
     {name : "Away from the World", year : 2009, label : "RCA"},
     ];
     
-export function get(name) {
-    return records.find((item) => {
-        return item.name == name;
-    });
-}
+    exports.get = (name) => {
+        return records.find((item) => {
+            return item.name == name;
+        });
+    };
     
-    const _delete = (name) => {
-    let recordLen = records.length;
-    records = records.filter((item) => {
-        return item.name !== name;
-    });
-    let deleted = (records.length == recordLen) ? "" : "deleted";
-    return { "RecordAction": deleted, "Total": records.length };
-};
-export { _delete as delete };
-    
+    exports.delete = (name) => {
+        var recordLen = records.length;
+        records = records.filter((item) => {
+            return item.name !== name;
+        });
+        var deleted = (records.length == recordLen) ? "" : "deleted";
+        return { "RecordAction": deleted, "Total": records.length};
+    };
     // assignment 2 stuffs
     // exports.add = (newRecord) => {
     //     var recordName = newRecord.name;
