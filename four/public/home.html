@@ -1,0 +1,20 @@
+<html>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<body>
+    <h1>Home</h1>
+<h2>Dave Matthews Band Records</h2>
+
+<form method="POST" action="/get">
+    <input type="text" name="name" placeholder="Enter Title Here" required maxlength="200">
+    <button>Search</button>
+</form>
+
+<form method="POST" action="/add">
+    <input type="text" name="name" placeholder="Enter Title Here" required maxlength="200">
+    <input type="text" name= "year" placeholder="Enter Album Year Here" required maxlength="200">
+    <input type="text" name= "label" placeholder="Enter Label Here" required maxlength="200">
+    <button>Add</button>
+</form>
+
+</body>
+</html>

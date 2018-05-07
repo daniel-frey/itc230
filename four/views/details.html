@@ -1,0 +1,19 @@
+<html>
+    <body>
+        <a href="/">Home</a>
+        
+        {{#if result}}
+        <h2>Record Details For: {{name}}</h2>
+        <ul>
+            <li>Title: {{result.name}}</li>
+            <li>Year: {{result.year}}</li>
+            <li>Label: {{result.label}}</li>
+        </ul>
+        <p>
+            <a href="/delete?name={{result.name}}">Delete</a>
+        </p>
+        {{else}}
+        <h2>{{name}} record not found</h2>
+        {{/if}}
+    </body>
+</html>
