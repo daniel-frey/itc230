@@ -27,18 +27,35 @@ let records = [
     };
     
     exports.add = (newRecord) => {
-        for(var i = 0; i < records.length; i++){
-            if(newRecord.name == records[i].name){
-                return;
-            }
-        }
-        var recordLen = records.length;
-        var recordName = newRecord.name;
-        var recordYear = newRecord.year;
-        var recordLabel = newRecord.label;
-        var completeRecord = {name : recordName, year : recordYear, label : recordLabel};
+        // for(var i = 0; i < records.length; i++){
+        //     if(newRecord.name == records[i].name){
+        //         return;
+        //     }
+        // }
+        // var recordLen = records.length;
+        // var recordName = newRecord.name;
+        // var recordYear = newRecord.year;
+        // var recordLabel = newRecord.label;
+        // var completeRecord = {name : recordName, year : recordYear, label : recordLabel};
         
-        records.push(completeRecord);
-        var added = (records.length == recordLen) ? "" : "added";
-        return {"RecordAction": added, "Total": records.length};
+        // records.push(completeRecord);
+        // var added = (records.length == recordLen) ? "" : "added";
+        // return {"RecordAction": added, "Total": records.length};
+        
+        var found = false;
+        records.forEach(function(item,index){
+            if (item.name == newRecord.name) {
+                found = true;
+            }
+        });
+        if (!found) {
+            newRecord.id = records.length;
+            records.push(newRecord);
+        }
+        var action = (found) ? "updated" : "added";
+        return {"RecordAction": action, "Total": records.length };
      };
+    
+    exports.allRecords = () => {
+        return records;
+    };
