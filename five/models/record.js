@@ -18,6 +18,6 @@ var recordSchema = mongoose.Schema({
  name: String,
  year: Number,
  label: String,
-}); 
+});
 
 module.exports = mongoose.model('Records', recordSchema);
