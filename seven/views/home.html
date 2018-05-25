@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/styles/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-dom.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+</head>
+
+<body>
+    
+    <div id="root"></div>
+    
+    <script type="text/babel">
+    
+    const Name = ({name}) => {
+         // simple component w/ single property
+         return <div> <h1>Dave Matthews Band</h1>
+         <h2>Studio Albums</h2> </div>;
+         }
+ 
+    const ItemList = ({items, filter, show}) => {
+         // generate array of item nodes
+         const itemNodes = items.map((item) => {
+         return <li id={item._id} key={item._id} onClick={show}>{item.name}</li>
+    });
+ return <ul>{itemNodes}</ul>;
+ }
+        class RecordApp extends React.Component{
+            constructor(props){
+                super(props);
+                //data from server
+                this.state = {
+                    items: {{{items}}},
+                    filter: "", //search term
+                    curItem: {} // current selected item
+                };
+                // bind App context to functions used by child components
+        // this.onSearchChange = this.onSearchChange.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.onSave = this.onSave.bind(this);
+        // this.onDelete = this.onDelete.bind(this);
+        this.onClear = this.onClear.bind(this);
+
+            }
+           // clear details form
+      onClear() {
+        this.setState({curItem: {}});
+      }
+      
+      // handle detail changes
+      onChange(event) {
+        var newItem = this.state.curItem;
+        newItem[event.target.name] = event.target.value
+        this.setState({curItem: newItem});
+      }
+      // Handle item save
+      onSave() {
+        let newItem = this.state.curItem;
+        if (!newItem.title) {
+          return;
+        }
+        fetch("/api/v1/add/", {
+          method: "POST",
+        	headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newItem)
+        }).then(res => res.json())
+        	.then((json) => {
+
+          let newData;
+          if (!newItem._id) { // add new item to array
+            newData = this.state.items;
+            newItem._id = json._id;
+            newData.push(newItem);
+          } else { // update existing item 
+            newData = this.state.items.map((item) => {
+              if (item._id === newItem._id) {
+                item = newItem; 
+              }
+              return item;
+            });          
+          }
+  
+          // Update state with new array
+          this.setState({items: newData});
+        });
+      }
+
+            
+            render(){
+                return (
+                <div>
+                <Title />
+                    
+                <div className="flex-container">
+                    <ItemList
+                    items={this.state.items} 
+                    filter={this.state.filter}
+                    show={this.showDetails.bind(this)}
+                    />
+                    <ItemDetails item={this.state.curItem} change={this.onChange} save={this.onSave} reset={this.onClear} delete={this.onDelete} />
+                </div>
+                </div>
+                );
+            }
+        
+        // show item details when list item clicked
+          showDetails(event){
+            // event.target is item clicked. Assumes each item has an id attribute
+            let editItem = this.state.items.find((item) => {
+              return item._id == event.target.id;
+            });
+            this.setState({curItem: editItem});
+            
+          }
+            }
+        const ItemDetails = (props) => {
+        return (
+          <span id="item-details">
+            <h3>Details:</h3>
+            <form onChange={props.change}>
+              <input type="text" name="title" placeholder="title" value={props.item.title || ""} /><p/>
+              <input type="text" name="leadActor" placeholder="lead actor" value={props.item.leadActor || ""} /><p/>
+              <input type="text" name="releaseDate" placeholder="release date" value={props.item.releaseDate || ""}  />
+              <p/>
+            </form>
+            <button onClick={props.save}>Save</button>  <button onClick={props.reset}>Reset</button> <button onClick={props.delete}>Delete</button>
+          </span>
+        );
+    }
+        
+        
+        ReactDOM.render(<MovieApp />, document.getElementById('root'));
+
+    </script>    
+    
+    <p><a href="/detail?name={{ name }}">{{name}}</a></p>
+
+    
+    <form method="POST" action="/detail">
+        <div class="submit">
+            <input type="text" name="title" placeholder="movie title" required maxlength="100">
+            <button>Search</button>
+        </div>
+</form>
+</body>
+</html>
+
+<!--class -->
+
+<!--class MovieRow extends React.Component {-->
+<!--    render() {-->
+<!--        return <p>{this.props.movie}</p>;-->
+<!--    }-->
+<!--}-->
+
+<!--class MovieList extends React.Component {-->
+<!--    render() {-->
+<!--        var rows = [];-->
+<!--        var lastId = null;-->
+<!--        this.props.movies.forEach(function(movie) {-->
+<!--            rows.push(<MovieRow movie={movie} key={movie.title} />);-->
+<!--        });-->
+<!--        return (-->
+<!--            <div>{rows}</div>-->
+<!--            );-->
+<!--    }-->
+<!--}-->
+
+<!--class SearchBar extends React.Component {-->
+<!--  render() {-->
+<!--    return (-->
+<!--      <form>-->
+<!--        <input type="text" placeholder="Movie Title" />-->
+<!--      </form>-->
+<!--    );-->
+<!--  }-->
+<!--}-->
+
+
+<!--class FilterableProductTable extends React.Component {-->
+<!--    render() {-->
+<!--        return (-->
+<!--            <div>-->
+<!--               <MovieList movies={this.props.movies} />-->
+<!--            </div>-->
+<!--        );-->
+<!--    }-->
+<!--}-->
+
+<!--ReactDOM.render(-->
+<!--    <FilterableProductTable movies = {MOVIES} />,-->
+<!--    document.getElementByID('container)-->
+<!--);-->

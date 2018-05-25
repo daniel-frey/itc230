@@ -15,7 +15,7 @@ exports.getOne = function(name) {
 
 exports.deleteOne = function(name) {
   const oldLength = records.length;
-  records = records.filter(function(item){
+  movies = records.filter(function(item){
       return item.name !==name;
   });
   return {deleted: oldLength !==records.length, 
