@@ -15,13 +15,13 @@
     const Title = ({title}) => {
          // simple component w/ single property
          return <div> <h1>Dave Matthews Band</h1>
-         <h2>studio Albums</h2> </div>;
+         <h2>Studio Albums</h2> </div>;
          }
 
     const ItemList = ({items, filter, show}) => {
          // generate array of item nodes
          const itemNodes = items.map((item) => {
-         return <li id={item._id} key={item._id} onClick={show}>{item.title}</li>
+         return <li id={item._id} key={item._id} onClick={show}>{item.name}</li>
     });
 return <ul>{itemNodes}</ul>;
 }
