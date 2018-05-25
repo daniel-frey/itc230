@@ -7,7 +7,6 @@ var Record = require("./models/Record"); //database model
 app.set('port', process.env.PORT || 3000);
 app.use(express.static(__dirname + '/public')); // set location for static files
 app.use(require("body-parser").urlencoded({extended: true})); // parse form submissions
-//app.use('/api', require('cors')());
 
 var handlebars =  require("express-handlebars");
 app.engine(".html", handlebars({extname: '.html'}));
