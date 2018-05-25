@@ -14,43 +14,41 @@ let handlebars =  require("express-handlebars");
 app.engine('.html', handlebars({extname: '.html'}));
 app.set("view engine", '.html');
 
-var recordMethods = require("./recordMethods");
+//var recordMethods = require("./recordMethods");
 
-app.get('/', (req, res, next) => {
-  recordMethods.getAll().then((items) => {
-    res.render('home', {records: items }); 
-  }).catch((err) =>{
-    return next(err);
+// send static file as response
+app.get('/', function(req,res){
+  res.type('text/html');
+  //res.sendFile(__dirname + '/public/home.html');
+  res.render('../public/home.html', {records: record.getAll});
+ });
+ 
+ // send static file as response
+ app.get('/about', function(req,res){
+  res.type('text/html');
+  res.sendFile(__dirname + '/public/about.html');
+  res.render('about.html');
+ });
+ 
+ //handle GET
+ app.get('/delete', function(req,res){
+  var result = record.deleteOne(req.query.title); //delete movie object
+  res.render('delete', {title: req.query.title, result: result});
   });
-});
-//app.get is the method to add routes app.VERB
-// app.get('/', function(req, res){
-//   res.type('text/html');
-//   res.sendFile(__dirname + '/public/home.html');
-// });
-
-// app.get('/about', function(req, res){
-//   res.type('text/plain');
-//   res.send('About Page');
-// });
-
-// app.get('/delete', function(req, res){
-//   let deleted = record.delete(req.query.name);
-//   res.render('delete', {name: req.query.name, result: deleted});
-// });
-
-// app.post('/get', function(req, res){
-//   var header = "Searching for: " + req.body.name + ' by Dave Matthews Band<br>';
-//   var match = record.get(req.body.name);
-//   res.render("details", {name: req.body.name, result: match});
-// });
-
-// app.post('/add', function(req, res){
-//   let completeRecord = {name : req.body.name, year : req.body.year, label : req.body.label};
-//   let added = record.add(completeRecord);
-//   res.render('add',{name: req.body.name, result: added});
-// });
-
+ 
+ app.get('/detail', function(req,res){
+   console.log(req.query); // display parsed querystring object
+   var found = record.getOne(req.query.title);
+   res.render("details", {title: req.query.title, result: found, records: record.getAll()});
+ });
+ 
+ //handle POST
+ app.post('/detail', function(req,res){
+   console.log(req.body); // display parsed form submission
+   var found = record.getOne(req.body.title);
+   res.render("details", {title: req.body.title, result: found, records: record.getAll()});
+ });
+ 
 //404 page
 app.use(function(req, res){
   res.status(404);

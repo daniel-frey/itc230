@@ -1,11 +1,13 @@
+<!DOCTYPE html>
 <html>
-    <body>
-        <a href ="/">Home</a>
-        {{#if result.RecordAction}}
-        <h2>{{name}} Record Deleted</h2>
-        Total: {{result.Total}}
-        {{else}}
-        <h2>{{name}} record not found</h2>
-        {{/if}}
-    </body>
-</html>
+    <head><link rel="stylesheet" type="text/css" href="/styles/main.css"></head>
+<body>
+  <div>
+    <h2>Movie Deleted: {{title}}</h2>
+    
+      <p><strong>Delete Successful:</strong> {{ deleted }}</p>
+      <p><strong>Albums Remaining:</strong> {{ total }}</p>
+      <p><a href="/">New Search</a>
+   </div>
+</body>
+</html> 
