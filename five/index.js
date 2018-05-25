@@ -1,8 +1,8 @@
 'use strict'
-//var record = require("./lib/records.js");
+//var movie = require("./lib/movies.js");
 const express = require("express");
 const app = express();
-var Record = require("./models/Record.js"); //database model
+var Record = require("./models/Record"); //database model
 
 app.set('port', process.env.PORT || 3000);
 app.use(express.static(__dirname + '/public')); // set location for static files
@@ -16,15 +16,18 @@ app.set("view engine", ".html");
 app.get('/', function(req,res,next){
  Record.find({}, function (err, items) {
   var context = {
-   items: items.map(function(record){
+   items: items.map(function(name){
     return {
-     name: record.name
+     title: record.title
     }
    })
   };
   res.render('home.html', context);
     //console.log(items);
 });
+ //res.type('text/html');
+ //res.sendFile(__dirname + '/public/home.html');
+//  res.render('home.html', {movies: movie.getAll});
  });
 
 // send static file as response
@@ -40,11 +43,12 @@ app.get('/detail', function(req,res,next){
     res.type('text/html');
     res.render('details', {result: items});
   });
+  
 });
 
 //handle POST
 app.post('/detail', function(req,res, next){
-  Record.findOne({title:req.body.name}, function (err, items) {
+  Record.findOne({name:req.body.name}, function (err, items) {
     if (err) return next(err);
     res.type('text/html');
     res.render('details', {result: items});
@@ -54,7 +58,7 @@ app.post('/detail', function(req,res, next){
 app.get('/delete', function(req,res){
   Record.remove({ title:req.query.name}, function (err, result){
     if (err) return next(err);
-    let deleted = result.result.n !==0;
+    let deleted = result.result.n !==0; // n will be 0 if no docs deleted
     Record.count((err, total) => {
       res.type('text/html');
       res.render('delete', {name: req.query.name, deleted: result.result.n !==0, total: total});
