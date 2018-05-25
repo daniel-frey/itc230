@@ -16,4 +16,4 @@ var mySchema = mongoose.Schema({
  label: String,
 }); 
 
-module.exports = mongoose.model('Records', mySchema);
+module.exports = mongoose.model('Record', mySchema);
