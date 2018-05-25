@@ -7,16 +7,16 @@ exports.getAll = function() {
       return records
 };
 
-exports.getOne = function(title) {
+exports.getOne = function(name) {
   return records.find(function(item) {
-      return item.title == title;
+      return item.name == name;
   });
 };
 
-exports.deleteOne = function(title) {
+exports.deleteOne = function(name) {
   const oldLength = records.length;
   movies = records.filter(function(item){
-      return item.title !==title;
+      return item.name !==name;
   });
   return {deleted: oldLength !==records.length, 
           total: records.length 
