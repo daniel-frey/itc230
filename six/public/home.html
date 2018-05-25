@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/styles/main.css">
+</head>
+<body>
+    <h1>Dave Matthews Band</h1>
+    <h2>Studio Albums</h2>
+    
+    {{#each items}}
+    <p><a href="/detail?name={{ name }}">{{name}}</a></p>
+    {{/each}}
+    
+    <form method="POST" action="/detail">
+        <div class="submit">
+            <input type="text" name="title" placeholder="Album Name" required maxlength="100">
+            <button>Search</button>
+        </div>
+</form>
+</body>
+</html>
