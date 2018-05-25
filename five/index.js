@@ -14,18 +14,10 @@ app.set("view engine", ".html");
 
 // send static file as response
 app.get('/', function(req,res,next){
- Record.find({}, function (err, items) {
-  var context = {
-   items: items.map(function(name){
-    return {
-     title: record.title
-    }
-   })
-  };
-  res.render('home.html', context);
-    //console.log(items);
-});
-});
+  Record.find({}, function (err, items) {
+  res.render('home.html', {items: items});
+  });
+  });
 
 // send static file as response
 app.get('/about', function(req,res){
