@@ -9,8 +9,8 @@ Record.find({}, function (err, items) {
 });
 
 Record.find({}, function (err, items) {
-  if (err) {console.log(err) }
-  else {
-  // console.log(items.length);
+if (err) {console.log(err) }
+else {
+// console.log(items.length);
   }
 });
