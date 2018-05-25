@@ -1,5 +1,5 @@
 'use strict'
-//var movie = require("./lib/movies.js");
+//var movie = require("./lib/records.js");
 const express = require("express");
 const app = express();
 var Record = require("./models/Record"); //database model
@@ -27,7 +27,7 @@ app.get('/', function(req,res,next){
 });
  //res.type('text/html');
  //res.sendFile(__dirname + '/public/home.html');
-//  res.render('home.html', {movies: movie.getAll});
+//  res.render('home.html', {record: records.getAll});
  });
 
 // send static file as response
