@@ -1,0 +1,29 @@
+{
+  "name": "qualitymatters",
+  "version": "1.0.0",
+  "description": "Javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/*.js",
+    "lint": "eslint **/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fncreative/itc230.git"
+  },
+  "keywords": [
+    "Javascript"
+  ],
+  "author": "Daniel Frey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fncreative/itc230/issues"
+  },
+  "homepage": "https://github.com/fncreative/itc230#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.15.2",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^5.1.2"
+  }
+}
