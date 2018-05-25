@@ -18,7 +18,7 @@ app.get('/', function(req,res,next){
   var context = {
    items: items.map(function(record){
     return {
-     title: record.name
+     name: record.name
     }
    })
   };

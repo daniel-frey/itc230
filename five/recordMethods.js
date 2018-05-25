@@ -1,7 +1,7 @@
 var Record = require("../models/Record.js");
 // return all records that match a condition
 Record.findOne({name}, function (err, items) {
- //console.log(items.length);
+ //console.log(items);
  // other code here
 });
 // return all records
