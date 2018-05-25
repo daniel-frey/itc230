@@ -1,5 +1,5 @@
 'use strict'
-var record = require("./lib/records.js");
+//var record = require("./lib/records.js");
 const express = require("express");
 const app = express();
 var Record = require("./models/Record.js"); //database model
@@ -54,7 +54,7 @@ app.post('/detail', function(req,res, next){
 app.get('/delete', function(req,res){
   Record.remove({ title:req.query.name}, function (err, result){
     if (err) return next(err);
-    let deleted = result.result.n !==0; // n will be 0 if no docs deleted
+    let deleted = result.result.n !==0;
     Record.count((err, total) => {
       res.type('text/html');
       res.render('delete', {name: req.query.name, deleted: result.result.n !==0, total: total});

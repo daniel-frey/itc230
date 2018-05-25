@@ -4,7 +4,6 @@ Record.findOne({name}, function (err, items) {
  //console.log(items.length);
  // other code here
 });
-
 // return all records
 Record.find({}, function (err, items) {
     //console.log(items);
