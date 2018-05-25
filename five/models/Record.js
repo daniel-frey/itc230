@@ -11,7 +11,6 @@ var conn = mongoose.connection;
 conn.on('error', console.error.bind(console, 'connection error:'));
 
 var mySchema = mongoose.Schema({
- title: { type: String, required: true },
  name: String,
  year: Number,
  label: String,
