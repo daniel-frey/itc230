@@ -1,61 +1,74 @@
-"use strict";
-
-let record = require("./lib/records.js");
-
-const express = require('express');
-
+'use strict'
+var record = require("./lib/records.js");
+const express = require("express");
 const app = express();
+var Record = require("./models/Record.js"); //database model
 
 app.set('port', process.env.PORT || 3000);
-app.use(express.static(__dirname + '/public')); // allows direct navigation to static files
-app.use(require("body-parser").urlencoded({extended: true}));
+app.use(express.static(__dirname + '/public')); // set location for static files
+app.use(require("body-parser").urlencoded({extended: true})); // parse form submissions
 
-let handlebars =  require("express-handlebars");
-app.engine('.html', handlebars({extname: '.html'}));
-app.set("view engine", '.html');
-
-//var recordMethods = require("./recordMethods");
+var handlebars =  require("express-handlebars");
+app.engine(".html", handlebars({extname: '.html'}));
+app.set("view engine", ".html");
 
 // send static file as response
-app.get('/', function(req,res){
-  res.type('text/html');
-  //res.sendFile(__dirname + '/public/home.html');
-  res.render('../public/home.html', {records: record.getAll});
+app.get('/', function(req,res,next){
+ Record.find({}, function (err, items) {
+  var context = {
+   items: items.map(function(record){
+    return {
+     title: record.name
+    }
+   })
+  };
+  res.render('home.html', context);
+    //console.log(items);
+});
  });
- 
- // send static file as response
- app.get('/about', function(req,res){
-  res.type('text/html');
-  res.sendFile(__dirname + '/public/about.html');
-  res.render('about.html');
- });
- 
- //handle GET
- app.get('/delete', function(req,res){
-  var result = record.deleteOne(req.query.title); //delete movie object
-  res.render('delete', {title: req.query.title, result: result});
-  });
- 
- app.get('/detail', function(req,res){
-   console.log(req.query); // display parsed querystring object
-   var found = record.getOne(req.query.title);
-   res.render("details", {title: req.query.title, result: found, records: record.getAll()});
- });
- 
- //handle POST
- app.post('/detail', function(req,res){
-   console.log(req.body); // display parsed form submission
-   var found = record.getOne(req.body.title);
-   res.render("details", {title: req.body.title, result: found, records: record.getAll()});
- });
- 
-//404 page
-app.use(function(req, res){
-  res.status(404);
-  res.render('404');
+
+// send static file as response
+app.get('/about', function(req,res){
+ res.type('text/html');
+ res.sendFile(__dirname + '/public/about.html');
+ res.render('about.html');
 });
 
-app.listen(app.get('port'), function(){
-  console.log('Express has started on http://localhost: ' +
-    app.get('port') + ';press Ctrl-C to terminate.');
+app.get('/detail', function(req,res,next){
+  Record.findOne({name:req.query.name}, function (err, items) {
+    if (err) return next(err);
+    res.type('text/html');
+    res.render('details', {result: items});
+  });
+});
+
+//handle POST
+app.post('/detail', function(req,res, next){
+  Record.findOne({title:req.body.name}, function (err, items) {
+    if (err) return next(err);
+    res.type('text/html');
+    res.render('details', {result: items});
+  });
+});
+
+app.get('/delete', function(req,res){
+  Record.remove({ title:req.query.name}, function (err, result){
+    if (err) return next(err);
+    let deleted = result.result.n !==0; // n will be 0 if no docs deleted
+    Record.count((err, total) => {
+      res.type('text/html');
+      res.render('delete', {name: req.query.name, deleted: result.result.n !==0, total: total});
+    });
+  });
+});
+
+// define 404 handler
+app.use(function(req,res) {
+ res.type('text/plain'); 
+ res.status(404);
+ res.send('404 - Not found');
+});
+
+app.listen(app.get('port'), function() {
+ console.log('Express started'); 
 });

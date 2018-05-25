@@ -3,17 +3,16 @@
   <head><link rel="stylesheet" type="text/css" href="/styles/main.css"></head>
 <body>
   </div>
-  <h2>Details for: {{title}}</h2>
+  <h2>Details for: {{name}}</h2>
   {{#if result}}
-    <li><strong>Title:</strong> {{ result.title }}</li>
-    <li><strong>Release Date:</strong> {{ result.releaseDate }}</li>
+    <li><strong>Album Name:</strong> {{ result.name }}</li>
+    <li><strong>Release Date:</strong> {{ result.year }}</li>
     <li><strong>Label:</strong> {{ result.label }}</li>
     
-    
-    <p id="left"><a href="/delete?title={{ result.title }}">Delete</a></p>
+    <p id="left"><a href="/delete?name={{ result.name }}">Delete</a></p>
     <p id="right"><a href="/">New Search</a></p>
   {{else}}
-    There is no record for that film.
+    There is no record for that album.
   {{/if}}
   </div>
 </body>
