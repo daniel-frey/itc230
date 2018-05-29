@@ -1,5 +1,4 @@
 'use strict'
-//var movie = require("./lib/records.js");
 const express = require("express");
 const app = express();
 var Record = require("./models/Record"); //database model
